@@ -1,0 +1,8 @@
+{
+  "name": "VIEWTEX",
+  "description": "An advanced human-centered intelligent hybrid search engine combining exact keyword search, semantic retrieval, adaptive reranking, and the VIEWTEX Reason Layer.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

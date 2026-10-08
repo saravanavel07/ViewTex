@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-warm: #FAF8F5;
+    --bg-surface: #FFFFFF;
+    --bg-card: #FDFCFA;
+    --bg-muted: #F3EFE6;
+    --border-warm: #E6E1D7;
+    --border-subtle: #ECE8E0;
+    --text-primary: #1E2022;
+    --text-secondary: #575D65;
+    --text-muted: #848B94;
+    --accent-graphite: #2C3036;
+    --accent-warm: #C87A3E;
+    --accent-warm-soft: #F5EAE0;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-serif: 'Newsreader', Georgia, serif;
+  }
+
+  body {
+    background-color: var(--bg-warm);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+  }
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF8F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #D9D3C7;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C4BDAF;
+}
+
+/* Subtle search beam animation */
+@keyframes searchSweep {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(200%);
+    opacity: 0;
+  }
+}
+
+.animate-search-sweep {
+  animation: searchSweep 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Bird glide animation */
+@keyframes birdGlideLeft {
+  0% {
+    transform: translate(110vw, 15vh) scale(0.7);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.22;
+  }
+  90% {
+    opacity: 0.22;
+  }
+  100% {
+    transform: translate(-10vw, 25vh) scale(0.65);
+    opacity: 0;
+  }
+}
+
+@keyframes birdGlideRight {
+  0% {
+    transform: translate(-10vw, 40vh) scale(0.6);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.18;
+  }
+  90% {
+    opacity: 0.18;
+  }
+  100% {
+    transform: translate(110vw, 32vh) scale(0.55);
+    opacity: 0;
+  }
+}
+
+.animate-bird-left {
+  animation: birdGlideLeft 64s linear infinite;
+}
+
+.animate-bird-right {
+  animation: birdGlideRight 85s linear infinite;
+}
