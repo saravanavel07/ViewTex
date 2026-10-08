@@ -1,104 +1,268 @@
 # VIEWTEX
 
-## Intelligent Hybrid Semantic Search Engine
+A human-centered hybrid search engine that blends exact keyword matching, semantic retrieval, adaptive ranking, and explainable evidence-based results.
 
-VIEWTEX is a human-centered intelligent search engine combining exact keyword retrieval, semantic understanding, adaptive retrieval, hybrid ranking, reranking and evidence-based explanations.
+VIEWTEX is built as a full-stack TypeScript application with a React frontend and an Express search backend. It is designed for research-heavy queries where users want more than a generic AI answer—they want verified evidence, ranked results, and transparent retrieval logic.
 
-Core pipeline:
+## Why VIEWTEX
 
-**Query → Understand → Retrieve → Rank → Explain**
+Traditional search tools often optimize for either:
+- exact matches,
+- semantic similarity,
+- or chat-style summaries.
 
----
-
-### Brand Identity & Character
-
-- **Name**: VIEWTEX
-- **Signature Mascot**: A small, curious, intelligent alien sitting naturally on a rock and laughing.
-- **Visual Aesthetic**: Premium, minimal, editorial, intelligent, technical. Warm biscuit white palette (`#FAF8F5`, `#F5F2EB`) with dark graphite typography and zero-pill layout discipline.
-- **Atmospheric Motifs**: Extremely subtle abstract soaring silhouettes of distant eagles and vultures along the sky edges, symbolizing observation, thermal flight, and patient exploration.
+VIEWTEX combines all three while keeping the user in control. It surfaces the retrieval pipeline, exposes evidence, and avoids hallucinated answers by grounding output in retrieved passages.
 
 ---
 
-### Key Features
+## Core Experience
 
-- **Hybrid Search**: Combines sparse lexical keyword retrieval (Okapi BM25) with dense vector embeddings using Reciprocal Rank Fusion (RRF, $k=60$) and cross-attention passage reranking.
-- **Adaptive Retrieval**: Dynamically calibrates weighting between exact keyword matching and semantic vector similarity based on query intent (e.g., 90% Exact for system error codes like `ERR_CONNECTION_RESET`, 85% Semantic for abstract questions like `What is normalization in machine learning?`).
-- **VIEWTEX Reason Layer**: Signature explainable search feature displaying exact calibrated retrieval relevance metrics for every result (Semantic Relevance, Keyword Relevance, Context Relevance, Final Retrieval Score) with natural language explanations.
-- **Evidence-First Search & Verification**: Inspect verbatim source passages, page numbers, section headers, matching lexical tokens, and embedding vector distances.
-- **VIEWTEX Evidence Map**: Deterministic visual pipeline trace showing:
-  `User Query` → `Detected Concepts` → `Matched Documents` → `Relevant Passages` → `Ranking` → `Final Result`.
-- **Voice-to-Text Search**: Speech-to-text with real-time waveform visualizer, editable transcripts, auto-submit controls, and seamless fallback.
-- **Document Indexing**: Upload and index custom research files (PDF, TXT, DOCX, CSV, Markdown, Code) into the live vector index.
-- **Context-Aware Follow-up Queries**: Automatically resolves anaphoric referents across search queries (e.g. "Tell me about Python" → "What are its advantages?" resolves `its = Python`).
-- **Query Correction ("Did You Mean")**: Proposes spelling corrections without silently modifying the user's intent.
-- **Developer Search Comparison**: Side-by-side benchmark comparing Keyword vs Semantic vs Hybrid pipelines with latency, ranking, and Jaccard overlap metrics.
-- **Search Quality & Health Analytics**: Real-time evaluation of Precision@K, Recall@K, MRR, NDCG@10, and latency profiles (p50/p95).
-- **Curated Collections & Search History**: Save and organize research evidence into categorized folders with Markdown export.
-- **Optional Grounded AI Answer Mode**: Strictly separated "Generated Summary" and "Retrieved Evidence" with inline bracket citations and hard anti-hallucination guardrails.
+VIEWTEX follows this flow:
+
+Query → Understand → Retrieve → Rank → Explain
+
+This means users can:
+- search by exact token or identifier,
+- search by meaning and concept,
+- compare different search modes,
+- inspect evidence passages,
+- review a deterministic retrieval pipeline,
+- save research to collections,
+- and ask for grounded summaries using retrieved context.
 
 ---
 
-### Architecture & Innovation
+## Features
 
+### Hybrid retrieval
+- Keyword search using exact token matching and BM25-style lexical relevance
+- Semantic search using dense vector similarity
+- Hybrid mode for combined ranking
+- Adaptive weighting between exact and semantic retrieval based on query intent
+
+### Explainable search
+- Evidence modal for each result
+- Relevance decomposition by metrics
+- Evidence map showing the search trace
+- Search health dashboard for latency and precision metrics
+
+### Research workflows
+- Voice-to-text search input
+- Document upload and chunking for custom corpora
+- Collection saving and export in Markdown
+- Search history tracking
+- Optional grounded summary generation from verified evidence
+
+### UX and design
+- Editorial, minimal interface inspired by research tooling
+- Focused search-first experience
+- Clear separation between generated summary and retrieved evidence
+
+---
+
+## Architecture
+
+```text
+Frontend (React + Vite)
+  │
+  ▼
+Search UI and Modals
+  │
+  ▼
+Express API Server
+  │
+  ├── Exact Search
+  ├── Semantic Search
+  ├── Hybrid Search
+  ├── Document Indexing
+  ├── Collections + History
+  └── Grounded Summary Generator
+  │
+  ▼
+In-memory search engine + chunk store
+  │
+  └── Indexed documents, evidence, ranking metadata
 ```
-USER QUERY
-    │
-    ▼
-QUERY NORMALIZATION (Typo Correction & Stopword Awareness)
-    │
-    ▼
-QUERY UNDERSTANDING & INTENT DETECTION
-    │
-    ▼
-ADAPTIVE RETRIEVAL WEIGHTING (Dynamic Exact / Semantic Ratio)
-    │
-    ├──► BM25 LEXICAL RETRIEVAL (Robertson-Spärck Jones Okapi k1=1.5, b=0.75)
-    │
-    └──► DENSE SEMANTIC RETRIEVAL (64-dim Concept Projection & Cosine Distance)
-    │
-    ▼
-HYBRID RECIPROCAL RANK FUSION (RRF k=60)
-    │
-    ▼
-PASSAGE CO-OCCURRENCE RERANKING
-    │
-    ▼
-VIEWTEX REASON LAYER (Attribution & Relevance Decomposition)
-    │
-    ▼
-EVIDENCE MAP & VERIFIED RESULTS FEED
+
+---
+
+## Tech Stack
+
+- React 19
+- TypeScript
+- Vite
+- Express
+- Tailwind CSS
+- Lucide icons
+- Google GenAI SDK
+
+---
+
+## Project Structure
+
+```text
+ViewTex/
+├─ src/
+│  ├─ components/
+│  ├─ documents/
+│  ├─ mascot/
+│  ├─ search_engine/
+│  ├─ server_engine/
+│  ├─ services/
+│  ├─ voice/
+│  ├─ App.tsx
+│  └─ main.tsx
+├─ server.ts
+├─ package.json
+├─ tsconfig.json
+├─ vite.config.ts
+├─ README.md
+└─ .env.example (if added locally)
 ```
 
 ---
 
-### Getting Started
+## Getting Started
 
-#### Prerequisites
-- Node.js >= 20.x or Docker
+### Prerequisites
 
-#### Running Locally
+- Node.js 20+
+- npm
+- Optional: Docker
+
+### Install dependencies
+
 ```bash
-# Install dependencies
 npm install
+```
 
-# Start full-stack development server (Port 3000)
+### Run the app in development mode
+
+```bash
 npm run dev
+```
 
-# Build production bundle
+This starts the full stack development server.
+
+### Build for production
+
+```bash
 npm run build
 npm start
 ```
 
-#### Running with Docker
+### Run with Docker
+
 ```bash
 docker-compose up --build
 ```
 
 ---
 
-### Human-First Search Guarantee
+## Environment Variables
 
-VIEWTEX adheres strictly to the Human-First Principle:
-1. Search results are never replaced by unprompted AI chatbot text.
-2. The user always remains in control of retrieval strategy.
-3. If insufficient evidence exists, VIEWTEX never fabricates answers or sources.
+If you want to enable grounded summaries through Gemini, create a local environment file:
+
+```bash
+GEMINI_API_KEY=your_api_key_here
+```
+
+The server reads this value in `server.ts` for the `/api/summary` endpoint.
+
+---
+
+## Search API Overview
+
+The backend exposes search and document endpoints such as:
+
+```text
+POST /api/search
+POST /api/search/keyword
+POST /api/search/semantic
+POST /api/search/hybrid
+GET /api/search/:id/evidence
+GET /api/search/:id/reason
+POST /api/documents/upload
+GET /api/documents
+DELETE /api/documents/:id
+GET /api/analytics
+GET /api/health
+POST /api/summary
+```
+
+Example search request:
+
+```bash
+curl -X POST http://localhost:3000/api/search \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "What is normalization in machine learning?",
+    "mode": "smart",
+    "activeContext": "Machine Learning"
+  }'
+```
+
+---
+
+## Search Modes
+
+### Exact
+Best for:
+- error codes,
+- identifiers,
+- technical strings,
+- deterministic keyword matches.
+
+### Semantic
+Best for:
+- abstract concepts,
+- research questions,
+- conceptual exploration,
+- meaning-based retrieval.
+
+### Hybrid
+Best for:
+- balanced relevance,
+- technical research,
+- comparison queries,
+- general-purpose retrieval.
+
+---
+
+## Human-First Design Principle
+
+VIEWTEX prioritizes evidence integrity over chat-style persuasion:
+
+1. Search results are not silently replaced by AI-generated text.
+2. Users stay in control of the retrieval strategy.
+3. If there is not enough evidence, the system does not fabricate answers.
+
+---
+
+## License
+
+This project is currently distributed without a formal license declaration in the repository metadata. If you plan to reuse or commercialize it, confirm the intended licensing terms with the project owner.
+
+---
+
+## Notes
+
+This project is designed as a research and product prototype for explainable hybrid search. It is especially useful for:
+- technical documentation search,
+- concept discovery,
+- evidence-grounded answer generation,
+- knowledge exploration workflows.
+
+---
+
+## Roadmap Ideas
+
+- Better persistent storage for documents and collections
+- Weighted relevance tuning and benchmark evaluation
+- Multi-index search support
+- Improved citation UX and result comparisons
+- Expanded file ingestion support for additional document types
+
+---
+
+Built for thoughtful search, transparent reasoning, and evidence-first discovery.
